@@ -8,30 +8,15 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import main.camera.Camera;
-import main.controller.ControllerManager;
-import main.menu.MenuManager;
 import main.settings.Settings;
-import main.sprites.Tile;
-import main.sprites.entity.player.Player;
-import main.sprites.SpriteManager;
-import main.sprites.Spritesheet;
 
 public class GamePanel extends JPanel implements Runnable {
-
-    // Init classes
     
     BufferedImage testImage;
     public String PLAYMODE = "k"; // k = keyboard | c = controller
     String line;
     Thread gameThread;
     public KeyHandler keyHandler = new KeyHandler(this);
-    public ControllerManager controllerManager = new ControllerManager(this);
-    public Spritesheet spritesheet = new Spritesheet();
-    public SpriteManager spriteManager = new SpriteManager(this);
-    public ScreenShake screenShake = new ScreenShake(this);
-    public MenuManager menuManager = new MenuManager(this);
-    public Camera camera = new Camera(this);
 
     public GamePanel() {
 
@@ -89,50 +74,9 @@ public class GamePanel extends JPanel implements Runnable {
 
 
 
-    public void updateSprites() {
-
-        if (!menuManager.inMenu) {
-
-            for (Tile tile : spriteManager.allTiles) {
-
-                tile.update();
-
-            }
-
-            for (Tile tile : spriteManager.allPlatformTiles) {
-
-                tile.update();
-                
-            }
-
-            for (Tile tile : spriteManager.allRopeTiles) {
-
-                tile.update();
-                
-            }
-
-        }
-
-        for (Player player : controllerManager.players) {
-
-            player.update();
-
-        }
-
-        if (menuManager.inMenu || menuManager.inSubMenu) {
-
-            menuManager.update();
-
-        }
-
-    }
-
-
-
     public void update() {
-
-        updateSprites();
-        camera.update();
+        
+        //
 
     }
 
@@ -150,51 +94,7 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D bg2 = (Graphics2D) baseDisplay.getGraphics();
 
 
-        if (!menuManager.inMenu && !menuManager.inSubMenu) {
-        
-            for (Tile tile : spriteManager.allTiles) {
-                
-                if (tile.id.equals("66") && !tile.destroyed) {
-
-                    tile.draw(bg2);
-
-                }
-
-                if (!tile.id.equals("66")) {
-
-                    tile.draw(bg2);
-
-                }
-                
-            }
-
-            for (Tile tile : spriteManager.allPlatformTiles) {
-
-                tile.draw(bg2);
-                
-            }
-
-            for (Tile tile : spriteManager.allRopeTiles) {
-
-                tile.draw(bg2);
-                
-            }
-            
-            for (Player player : controllerManager.players) {
-
-                player.draw(bg2);
-
-            }
-
-            spritesheet.drawText(bg2, "Players: " + controllerManager.playerCount, 0, 0, new String[] {"center", "top"});
-
-        }
-
-        if (menuManager.inMenu || menuManager.inSubMenu) {
-
-            menuManager.draw(bg2);
-
-        }
+        //
 
 
         bg2.dispose();
